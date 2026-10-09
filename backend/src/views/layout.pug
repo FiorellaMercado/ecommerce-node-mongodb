@@ -8,12 +8,13 @@ html(lang="en")
                 | Tienda pinguinos
     body 
         header
-            nav
-                a(href="http:/productos") Productos 
-                a(href="http:/pedidos") Pedidos
-                
-                form(action="/logout", method="post")  
-                    button(type="submit") Cerrar Sesion
+            if adminId
+                nav
+                    a(href="http:/productos") Productos 
+                    a(href="http:/pedidos") Pedidos
+                    
+                    form(action="/logout", method="post")  
+                        button(type="submit") Cerrar Sesion
                 
         main 
             block content

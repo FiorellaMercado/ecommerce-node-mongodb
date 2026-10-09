@@ -10,6 +10,9 @@ app.set('views', path.join(__dirname, 'views'));
 app.use(express.urlencoded({extended: true}));
 
 app.get('/', (req, res) => res.send('Funciona'));
+app.get('/prueba', (req, res) => {
+    res.render('prueba')
+})
 
 connectDB().then(()=> {
     app.listen(process.env.PORT, () => {

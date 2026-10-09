@@ -1,0 +1,21 @@
+doctype html
+html(lang="en")
+    head
+        meta(charset="UTF-8")
+        meta(name="viewport", content="width=device-width, initial-scale=1.0")
+        title 
+            block title
+                | Tienda pinguinos
+    body 
+        header
+            nav
+                a(href="http:/productos") Productos 
+                a(href="http:/pedidos") Pedidos
+                
+                form(action="/logout", method="post")  
+                    button(type="submit") Cerrar Sesion
+                
+        main 
+            block content
+        footer 
+            p Panel de administracion

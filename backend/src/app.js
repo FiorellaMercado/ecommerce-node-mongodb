@@ -4,9 +4,13 @@ const path = require('path');
 const connectDB = require('./config/db');
 const session = require('express-session')
 const MongoStore = require('connect-mongo').default;
+const setLocal=require('./middleware/setLocals');
+const authRoutes=require('./routes/authRoutes');
 
-const Admin = require('./models/Admin');
-const bcrypt=require('bcrypt')
+if (!process.env.SESSION_SECRET) {
+    console.error('Falta SESSION_SECRET en el .env');
+    process.exit(1);
+}
 
 const app = express();
 
@@ -30,38 +34,16 @@ app.use(session({
     secure: false // con valor es es para produccion
   }
 }));
-app.use((req, res, next) => {
-    res.locals.adminId = req.session.adminId;
-    next();
-});
+
+app.use(setLocal);
+
 app.get('/', (req, res) => res.send('Funciona'));
 app.get('/prueba', (req, res) => {
     res.render('prueba')
-})
-app.get('/login', (req, res)=> {
-    res.render('login')
-})
-
-app.post('/login', async (req,res,next)=> {
-    const email=(req.body.email || '').trim().toLowerCase()
-    const password =req.body['password']
-
-    if (!email || !password) {
-        return res.render('login', { error: 'Credenciales inválidas' });
-    }
-
-    const admin= await Admin.findOne({email}).select('+passwordHash')
-    
-    if (!admin || !await bcrypt.compare(password, admin.passwordHash)){
-        
-        return res.render('login',{ error: 'Credenciales inválidas' })
-    }
-    req.session.regenerate((err) => {
-        if (err) return next(err);
-        req.session.adminId = admin._id;
-        res.redirect('/prueba');
-    });
 });
+app.use('/', authRoutes);
+
+
 connectDB().then(()=> {
     app.listen(process.env.PORT, () => {
         console.log(`Servidor en http://localhost:${process.env.PORT}`)

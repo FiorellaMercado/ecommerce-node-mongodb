@@ -1,0 +1,33 @@
+extends ../layout
+
+block title
+    | Nuevo producto
+
+block content
+
+    h1 Nuevo producto
+
+    if errores && errores.length
+        ul(role="alert")
+            each error in errores
+                li= error
+                
+    form(action="/productos", method="post")
+        div
+            label(for="nombre") Nombre:
+            input#nombre(type="text", name="nombre", value=producto.nombre)
+        div
+            label(for="categoria") Categoria:
+            select#categoria(name="categoria", required) 
+                option(value="") Selecciona una categoria
+                each categoria in ['pescado','hielo','esmoquin']
+                    option(value=categoria, selected=producto.categoria === categoria)= categoria
+        div
+            label(for="stock") Stock:
+            input#stock(type="number", name="stock", min=0, value=producto.stock)
+        div
+            label(for="precio") Precio:
+            input#precio(type="number", min="0", name="precio", value=producto.precio)
+        button(type="submit") Guardar
+
+    a(href="/productos") Volver al listado

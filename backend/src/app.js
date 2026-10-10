@@ -8,6 +8,7 @@ const setLocal=require('./middleware/setLocals');
 
 const authRoutes=require('./routes/authRoutes');
 const productRoutes=require('./routes/productRoutes')
+const methodOverride = require('method-override');
 
 if (!process.env.SESSION_SECRET) {
     console.error('Falta SESSION_SECRET en el .env');
@@ -19,6 +20,7 @@ const app = express();
 app.set('view engine','pug');
 app.set('views', path.join(__dirname, 'views'));
 app.use(express.urlencoded({extended: true}));
+app.use(methodOverride('_method'));
 
 app.use(session({
   secret: process.env.SESSION_SECRET,

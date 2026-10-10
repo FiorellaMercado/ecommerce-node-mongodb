@@ -1,18 +1,18 @@
 extends ../layout
 
 block title
-    | Nuevo producto
+    | #{titulo}
 
 block content
 
-    h1 Nuevo producto
+    h1= titulo
 
     if errores && errores.length
         ul(role="alert")
             each error in errores
                 li= error
                 
-    form(action="/productos", method="post")
+    form(action=action, method="post")
         div
             label(for="nombre") Nombre:
             input#nombre(type="text", name="nombre", value=producto.nombre)

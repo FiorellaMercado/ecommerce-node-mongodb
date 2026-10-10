@@ -7,5 +7,7 @@ router.use(requireAuth)
 router.get('/', product.listProducts)
 router.get('/nuevo',product.showNewForm)
 router.post('/', product.createProduct)
+router.get('/:id/editar', product.showEditForm);
+router.put('/:id', product.editProduct)
 
 module.exports=router;

@@ -13,6 +13,7 @@ block content
                 th Precio 
                 th Stock 
                 th Estado 
+                th Acciones
         tbody
             each prod in productos 
                 tr 
@@ -21,6 +22,8 @@ block content
                     td= prod.precio
                     td= prod.stock
                     td= prod.activo ? 'Activo' : 'Inactivo'
+                    td
+                        a(href=`/productos/${prod._id}/editar`) Editar
             else 
                 tr 
-                    td(colspan="5") No hay prodcutos todavia
+                    td(colspan="6") No hay prodcutos todavia

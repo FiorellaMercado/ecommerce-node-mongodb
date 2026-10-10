@@ -22,7 +22,7 @@ const login=async (req,res, next)=>{
     req.session.regenerate((err) => {
         if (err) return next(err);
         req.session.adminId = admin._id;
-        res.redirect('/prueba');
+        res.redirect('/productos');
     });
 }
 

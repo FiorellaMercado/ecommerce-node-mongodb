@@ -5,7 +5,9 @@ const connectDB = require('./config/db');
 const session = require('express-session')
 const MongoStore = require('connect-mongo').default;
 const setLocal=require('./middleware/setLocals');
+
 const authRoutes=require('./routes/authRoutes');
+const productRoutes=require('./routes/productRoutes')
 
 if (!process.env.SESSION_SECRET) {
     console.error('Falta SESSION_SECRET en el .env');
@@ -38,10 +40,12 @@ app.use(session({
 app.use(setLocal);
 
 app.get('/', (req, res) => res.send('Funciona'));
-app.get('/prueba', (req, res) => {
-    res.render('prueba')
-});
+// app.get('/prueba', (req, res) => {
+//     res.render('prueba')
+// });
 app.use('/', authRoutes);
+
+app.use('/productos',productRoutes)
 
 
 connectDB().then(()=> {

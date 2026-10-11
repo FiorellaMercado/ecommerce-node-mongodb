@@ -9,5 +9,6 @@ router.get('/nuevo',product.showNewForm)
 router.post('/', product.createProduct)
 router.get('/:id/editar', product.showEditForm);
 router.put('/:id', product.editProduct)
+router.delete('/:id',product.deleteProduct)
 
 module.exports=router;

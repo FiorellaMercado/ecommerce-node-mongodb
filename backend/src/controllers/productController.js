@@ -91,4 +91,20 @@ const editProduct=async (req,res)=>{
     res.redirect('/productos')
 }
 
-module.exports={listProducts, showNewForm, createProduct, showEditForm, editProduct}
+const deleteProduct= async (req,res) =>{
+    const id=req.params.id
+
+    if (!mongoose.isValidObjectId(id)) {
+        return res.status(404).send('Producto no encontrado');
+    }
+    
+    const producto=await Product.findByIdAndUpdate(id,{activo:false});
+    
+    if (!producto) {
+        return res.status(404).send('Producto no encontrado');
+    }
+
+    res.redirect('/productos')
+}
+
+module.exports={listProducts, showNewForm, createProduct, showEditForm, editProduct, deleteProduct}

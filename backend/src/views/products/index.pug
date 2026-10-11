@@ -24,6 +24,8 @@ block content
                     td= prod.activo ? 'Activo' : 'Inactivo'
                     td
                         a(href=`/productos/${prod._id}/editar`) Editar
+                        form(action=`/productos/${prod._id}?_method=DELETE`, method="post")
+                            button(type="submit") Eliminar
             else 
                 tr 
                     td(colspan="6") No hay prodcutos todavia

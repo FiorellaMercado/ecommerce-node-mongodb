@@ -7,7 +7,8 @@ const MongoStore = require('connect-mongo').default;
 const setLocal=require('./middleware/setLocals');
 
 const authRoutes=require('./routes/authRoutes');
-const productRoutes=require('./routes/productRoutes')
+const productRoutes=require('./routes/productRoutes');
+const orderRoutes=require('./routes/orderRoutes')
 const methodOverride = require('method-override');
 
 if (!process.env.SESSION_SECRET) {
@@ -48,6 +49,8 @@ app.get('/', (req, res) => res.send('Funciona'));
 app.use('/', authRoutes);
 
 app.use('/productos',productRoutes)
+
+app.use('/pedidos', orderRoutes )
 
 
 connectDB().then(()=> {

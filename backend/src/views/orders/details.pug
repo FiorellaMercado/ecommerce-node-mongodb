@@ -1,0 +1,27 @@
+extends ../layout
+
+block content 
+    h1 Pedido 
+
+    p Cliente: #{pedidos.cliente}
+    p Dirección: #{pedidos.direccion}
+    p Estado: #{pedidos.estado}
+    p Fecha: #{pedidos.createdAt.toLocaleString('es')}
+
+    table 
+        thead 
+            tr
+                th Producto 
+                th Precio 
+                th Cantidad
+                th Subtotal 
+        tbody
+            each item in pedidos.items
+                tr 
+                    td= item.nombre 
+                    td= item.precio 
+                    td= item.cantidad 
+                    td= item.precio * item.cantidad 
+    p Total: #{pedidos.total}
+
+    a(href="/pedidos") Volver a pedidos 

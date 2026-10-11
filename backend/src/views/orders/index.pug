@@ -1,0 +1,27 @@
+extends ../layout
+
+block content
+    h1 Pedidos
+    
+    
+    table
+        thead 
+            tr 
+                th Cliente
+                th Direccion
+                th Estado 
+                th Total
+                th Detalles
+        tbody
+            each ped in pedidos
+                tr 
+                    td= ped.cliente
+                    td= ped.direccion
+                    td= ped.estado
+                    td= ped.total 
+                    td
+                        a(href=`/pedidos/${ped._id}`) Ver detalle
+                   
+            else 
+                tr 
+                    td(colspan="5") No hay pedidos todavia

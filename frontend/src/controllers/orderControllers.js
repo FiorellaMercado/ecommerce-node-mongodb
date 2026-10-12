@@ -6,7 +6,7 @@ const mongoose= require('mongoose')
 const showCreateForm = async(req, res)=>{
 
     const productos=await Product.find({activo: true}).sort({nombre:1}).lean()
-    res.render('orders/new', {productos, errores: []
+    res.render('orders/new', {productos, errores: [], pedido: {}
     })
 
 }

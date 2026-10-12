@@ -8,12 +8,14 @@ const app = express();
 
 
 const orderRoutes = require('./routes/orderRoutes');
+const productRoutes= require('./routes/productRoutes')
 
 app.set('view engine', 'pug')
 app.set('views', path.join(__dirname, 'views'))
 app.use(express.urlencoded({extended:true}));
 
 app.use('/pedidos', orderRoutes)
+app.use('/productos', productRoutes)
 
 connectDB().then(()=>{
     app.listen(process.env.PORT, ()=>{

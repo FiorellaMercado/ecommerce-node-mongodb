@@ -1,0 +1,22 @@
+extends ../layout
+
+block content 
+
+    h1 Productos 
+
+    table 
+        thead 
+            tr 
+                th Nombre
+                th Categroria 
+                th Precio 
+                th Stock
+        tbody 
+            each prod in productos
+                tr
+                    td= prod.nombre 
+                    td= prod.categoria 
+                    td= prod.precio 
+                    td= prod.stock 
+            else 
+                td(colspan="4") No hay prodcutos todavia

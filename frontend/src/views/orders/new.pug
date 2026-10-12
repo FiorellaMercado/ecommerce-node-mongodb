@@ -4,13 +4,18 @@ extends ../layout
 block content 
 
     h1 Hacer pedido
-    form(action="", method="post") 
+    if errores && errores.length
+        ul(role="alert")
+            each error in errores 
+                li= error
+
+    form(action="/pedidos", method="post") 
         div
             label(for="cliente") Cliente:
-            input#cliente(type="text", name="cliente", value="") 
+            input#cliente(type="text", name="cliente", value=pedido.cliente) 
         div
             label(for="direccion") Direccion:
-            input#direccion(type="text", name="direccion", value="") 
+            input#direccion(type="text", name="direccion", value=pedido.direccion) 
 
         table 
             thead 
@@ -29,5 +34,9 @@ block content
                 else 
                     tr 
                         td(colspan="3") No hay productos todavia
+
+        p
+
+        button(type="submit") Comprar
             
  

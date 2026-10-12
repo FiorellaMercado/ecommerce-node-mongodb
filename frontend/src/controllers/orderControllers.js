@@ -5,7 +5,7 @@ const mongoose= require('mongoose')
 
 const showCreateForm = async(req, res)=>{
 
-    const productos=await Product.find({activo: true}).sort({nombre:1}).lean()
+    const productos=await Product.find({activo: true, stock:{$gt:0}}).sort({nombre:1}).lean()
     res.render('orders/new', {productos, errores: [], pedido: {}
     })
 
@@ -23,15 +23,18 @@ const createOrder = async (req,res)=>{
     
     const ids=Object.keys(cantidades)
     
-    const productos= await Product.find({ _id: { $in: ids }, activo: true }).lean()
+    const productos= await Product.find({ _id: { $in: ids }, activo: true , stock:{$gt:0}}).lean();
+    if (ids.length!=productos.length){
+        return res.status(400).send("Productos/s no valido/s")
+    }
     for(const producto of productos) {
         let cantidad=Number(cantidades[producto['_id']])
         suma=suma+(producto['precio']*cantidad)
         items.push({producto:producto['_id'], nombre:producto['nombre'],precio:producto['precio'], cantidad:cantidad})
     };
-
+    let pedido;
     try{
-        await Order.create({
+        pedido=await Order.create({
         cliente: cliente,
         direccion: direccion,
         items: items,
@@ -40,7 +43,7 @@ const createOrder = async (req,res)=>{
     }catch(err){
         if (err.name==='ValidationError'){
             const errores= Object.values(err.errors).map((e)=> e.message);
-            const productos_recarga = await Product.find({ activo: true }).sort({nombre:1}).lean()
+            const productos_recarga = await Product.find({ activo: true, stock:{$gt:0} }).sort({nombre:1}).lean()
             return res.status(400).render('orders/new',{
                 errores,
                 pedido: req.body,
@@ -50,11 +53,11 @@ const createOrder = async (req,res)=>{
         throw err;
     }
     
-    res.redirect('/pedidos/confirmation')
+    res.redirect(`/pedidos/${pedido._id}/confirmation`)
 }
 
 const showConfirmation = (req,res) =>{
-
+    
     res.render('orders/confirmation')
 }
 

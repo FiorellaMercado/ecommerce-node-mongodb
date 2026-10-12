@@ -1,0 +1,33 @@
+extends ../layout 
+
+
+block content 
+
+    h1 Hacer pedido
+    form(action="", method="post") 
+        div
+            label(for="cliente") Cliente:
+            input#cliente(type="text", name="cliente", value="") 
+        div
+            label(for="direccion") Direccion:
+            input#direccion(type="text", name="direccion", value="") 
+
+        table 
+            thead 
+                tr 
+                    th Producto 
+                    th Precio 
+                    th Cantidad 
+            tbody 
+                each prod in productos
+                    tr 
+                        td
+                            label(for=`cantidad-${prod._id}`)= prod.nombre 
+                        td= prod.precio 
+                        td 
+                            input(type="number", id=`cantidad-${prod._id}`, name=`cantidades[${prod._id}]`, min="0", step="1", value="0")
+                else 
+                    tr 
+                        td(colspan="3") No hay productos todavia
+            
+ 

@@ -39,8 +39,8 @@ La consigna también imponía restricciones técnicas que condicionan el diseño
 Clonar el repositorio:
 
 ```bash
-git clone <URL-del-repositorio>
-cd <carpeta-del-repositorio>
+git clone https://github.com/FiorellaMercado/ecommerce-node-mongodb.git
+cd ecommerce-node-mongodb
 ```
 
 ### Backend (panel de administración)
